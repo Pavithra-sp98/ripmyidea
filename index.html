@@ -1,0 +1,1458 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RIP MY IDEA</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Inter:wght@400;500;600&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d0d0d;
+      --bg2: #141414;
+      --border: rgba(255,255,255,0.12);
+      --border-strong: rgba(255,255,255,0.22);
+      --text: #ffffff;
+      --text-secondary: rgba(255,255,255,0.72);
+      --stone-top: #484848;
+      --stone-mid: #323232;
+      --stone-base: #222222;
+      --stone-border: rgba(255,255,255,0.22);
+      --stone-engraving: #ffffff;
+      --stone-engraving-soft: rgba(255,255,255,0.80);
+      --shadow-color: rgba(0,0,0,0.5);
+      --toll-highlight-bg: #ffffff;
+      --toll-highlight-text: #0d0d0d;
+      --toll-label-color: #ffffff;
+      --card-hover-bg: #ffffff;
+      --card-hover-text: #0d0d0d;
+      --card-border: rgba(255,255,255,0.16);
+    }
+    [data-theme="light"] {
+      --bg: #f4f2ed;
+      --bg2: #eae8e3;
+      --border: rgba(0,0,0,0.12);
+      --border-strong: rgba(0,0,0,0.22);
+      --text: #111111;
+      --text-secondary: rgba(0,0,0,0.65);
+      --stone-top: #b8b8b8;
+      --stone-mid: #a0a0a0;
+      --stone-base: #8a8a8a;
+      --stone-border: rgba(0,0,0,0.25);
+      --stone-engraving: #111111;
+      --stone-engraving-soft: rgba(0,0,0,0.78);
+      --shadow-color: rgba(0,0,0,0.18);
+      --toll-highlight-bg: #111111;
+      --toll-highlight-text: #f4f2ed;
+      --toll-label-color: #111111;
+      --card-hover-bg: #111111;
+      --card-hover-text: #f4f2ed;
+      --card-border: rgba(0,0,0,0.16);
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      padding: 0 28px; height: 58px;
+      transition: background 0.3s;
+    }
+    .nav-left { display: flex; align-items: center; }
+    .nav-about {
+      background: none; border: none;
+      color: var(--text-secondary);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.82rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      cursor: pointer; padding: 6px 0; transition: color 0.2s;
+    }
+    .nav-about:hover { color: var(--text); }
+    .nav-brand {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900; font-size: 1rem;
+      letter-spacing: 0.1em; color: var(--text);
+      text-transform: uppercase; text-align: center;
+    }
+    .nav-right { display: flex; justify-content: flex-end; align-items: center; }
+    .theme-toggle {
+      background: none; border: 1px solid var(--border-strong);
+      color: var(--text-secondary);
+      width: 36px; height: 36px; border-radius: 50%; cursor: pointer;
+      font-size: 1rem; display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s;
+    }
+    .theme-toggle:hover { color: var(--text); border-color: var(--text); }
+
+    /* HERO */
+    .hero {
+      text-align: center;
+      padding: 90px 24px 74px;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-eyebrow {
+      font-family: 'Nunito Sans', sans-serif;
+      font-size: 0.77rem; letter-spacing: 0.28em;
+      text-transform: uppercase; color: var(--text-secondary); margin-bottom: 20px;
+    }
+    h1.hero-title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900; font-size: clamp(2.8rem, 7vw, 5.4rem);
+      line-height: 1.07; color: var(--text);
+      animation: fadeDown 0.8s ease both;
+    }
+    h1.hero-title em { font-style: italic; font-weight: 700; }
+    .death-toll {
+      margin-top: 28px; display: inline-flex; align-items: center; gap: 10px;
+      animation: fadeDown 0.8s 0.15s ease both;
+    }
+    .toll-number {
+      background: var(--toll-highlight-bg); color: var(--toll-highlight-text);
+      font-family: 'Nunito Sans', sans-serif; font-size: 1rem; font-weight: 800;
+      padding: 3px 9px; border-radius: 3px; letter-spacing: 0.02em; line-height: 1.4;
+      transition: background 0.3s, color 0.3s;
+    }
+    .toll-label {
+      font-family: 'Nunito Sans', sans-serif; font-size: 0.85rem; font-weight: 700;
+      color: var(--toll-label-color); letter-spacing: 0.18em; text-transform: uppercase;
+      transition: color 0.3s;
+    }
+    .hero-cta { margin-top: 38px; animation: fadeDown 0.8s 0.25s ease both; }
+    .bury-hero-btn {
+      display: inline-block; background: var(--text); color: var(--bg);
+      font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.05rem;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 16px 48px; border: none; cursor: pointer;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .bury-hero-btn:hover { opacity: 0.82; transform: translateY(-2px); }
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* WAITLIST */
+    .waitlist-section {
+      border-bottom: 1px solid var(--border);
+      padding: 60px 24px; text-align: center;
+    }
+    .waitlist-eyebrow {
+      font-family: 'Nunito Sans', sans-serif;
+      font-size: 0.72rem; letter-spacing: 0.28em;
+      text-transform: uppercase; color: var(--text-secondary); margin-bottom: 12px;
+    }
+    h2.waitlist-heading {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900; font-size: clamp(1.4rem, 3vw, 2rem);
+      color: var(--text); margin-bottom: 12px; line-height: 1.2;
+    }
+    p.waitlist-sub {
+      font-size: 1rem; color: var(--text-secondary);
+      line-height: 1.65; margin-bottom: 30px;
+      max-width: 500px; margin-left: auto; margin-right: auto;
+    }
+    .waitlist-form-row {
+      display: flex; max-width: 440px; margin: 0 auto;
+      border: 1px solid var(--border-strong);
+    }
+    .waitlist-input {
+      flex: 1; background: transparent; border: none;
+      padding: 13px 16px; color: var(--text);
+      font-family: 'Inter', sans-serif; font-size: 0.95rem; outline: none;
+    }
+    .waitlist-input::placeholder { color: var(--text-secondary); opacity: 0.6; }
+    .waitlist-btn {
+      background: var(--text); color: var(--bg); border: none;
+      padding: 13px 22px;
+      font-family: 'Nunito Sans', sans-serif; font-size: 0.78rem; font-weight: 800;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      cursor: pointer; transition: opacity 0.2s; white-space: nowrap;
+    }
+    .waitlist-btn:hover { opacity: 0.84; }
+    .waitlist-msg {
+      margin-top: 12px; font-family: 'Nunito Sans', sans-serif;
+      font-size: 0.8rem; color: var(--text-secondary); min-height: 20px;
+    }
+    .waitlist-msg.success { color: #5cb85c; }
+    .waitlist-msg.error { color: #e57373; }
+
+    /* GRAVEYARD SECTION */
+    .graveyard-section {
+      max-width: 1200px; margin: 0 auto 100px; padding: 0 48px;
+    }
+    .graveyard-hr { border: none; border-top: 1px solid var(--border); margin: 0 -24px; }
+    .graveyard-search-row {
+      display: flex; justify-content: flex-end; padding: 24px 0 0;
+    }
+    h2.section-heading {
+      font-family: 'Playfair Display', serif; font-weight: 700; font-style: italic;
+      font-size: 1.1rem; color: var(--text-secondary);
+      letter-spacing: 0.18em; text-transform: uppercase;
+      text-align: center; margin: 28px 0 44px;
+    }
+
+    /* Search + filter */
+    .search-filter-wrap {
+      display: flex; align-items: stretch;
+      border: 1px solid var(--border-strong); border-radius: 4px;
+      overflow: visible; min-width: 280px; max-width: 380px;
+    }
+    .search-input-wrap {
+      display: flex; align-items: center;
+      flex: 1; padding: 0 14px; gap: 8px;
+      background: var(--bg2); border-radius: 4px 0 0 4px; overflow: hidden;
+    }
+    .search-icon { color: var(--text-secondary); font-size: 0.9rem; flex-shrink: 0; }
+    #graveSearch {
+      background: transparent; border: none; color: var(--text);
+      font-family: 'Nunito Sans', sans-serif; font-size: 0.82rem; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      outline: none; width: 100%; padding: 11px 0;
+    }
+    #graveSearch::placeholder { color: var(--text-secondary); opacity: 0.7; }
+    .filter-btn {
+      background: var(--bg2); border: none; border-left: 1px solid var(--border-strong);
+      color: var(--text-secondary); padding: 0 14px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: color 0.2s, background 0.2s; position: relative; border-radius: 0 4px 4px 0;
+    }
+    .filter-btn:hover { color: var(--text); background: var(--border); }
+    .filter-icon { display: flex; flex-direction: column; gap: 3px; align-items: flex-end; }
+    .filter-icon span { display: block; height: 2px; background: currentColor; border-radius: 1px; }
+    .filter-icon span:nth-child(1) { width: 16px; }
+    .filter-icon span:nth-child(2) { width: 11px; }
+    .filter-icon span:nth-child(3) { width: 7px; }
+    .filter-dropdown {
+      display: none; position: absolute; top: calc(100% + 6px); right: 0;
+      background: var(--bg2); border: 1px solid var(--border-strong);
+      min-width: 200px; z-index: 200; border-radius: 2px; overflow: hidden;
+    }
+    .filter-dropdown.open { display: block; }
+    .filter-option {
+      display: block; width: 100%; background: none; border: none; text-align: left;
+      font-family: 'Nunito Sans', sans-serif; font-size: 0.82rem; font-weight: 600;
+      color: var(--text-secondary); letter-spacing: 0.08em;
+      padding: 12px 16px; cursor: pointer; transition: background 0.15s, color 0.15s;
+    }
+    .filter-option:hover { background: var(--border); color: var(--text); }
+    .filter-option.active { color: var(--text); font-weight: 800; }
+
+    /* GRAVES GRID */
+    .graves-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 60px;
+    }
+
+    /* GRAVE CARD */
+    .grave-card {
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      background: transparent;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s, transform 0.25s;
+      display: flex; flex-direction: column;
+      animation: riseUp 0.5s ease both;
+      overflow: hidden;
+    }
+    .grave-card:hover {
+      background: var(--card-hover-bg);
+      border-color: transparent;
+      transform: translateY(-6px);
+    }
+    @keyframes riseUp {
+      from { opacity: 0; transform: translateY(26px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Responsive equal padding — % of card width scales with grid on all devices */
+    .grave-card-stone {
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 12%;
+    }
+
+    /* ── GRAVESTONE ──────────────────────────────────
+       arch: 130px  |  body: 260px  |  p1: 18px  |  p2: 22px
+       Total fixed height = 430px. All stones identical.
+    ─────────────────────────────────────────────────── */
+    .stone-whole {
+      width: 260px;
+      flex-shrink: 0;
+      display: flex; flex-direction: column; align-items: center;
+    }
+
+    /* Arch — cross + badge, centred with slight upward visual nudge for the rounded top */
+    .stone-arch {
+      width: 220px;
+      height: 130px;
+      background: linear-gradient(160deg, var(--stone-top) 0%, var(--stone-mid) 55%, var(--stone-base) 100%);
+      border: 1px solid var(--stone-border);
+      border-bottom: none;
+      border-radius: 110px 110px 0 0;
+      position: relative;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding-bottom: 8px;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+    .stone-arch::before {
+      content: '';
+      position: absolute; top: 10px; left: 10px; right: 10px; bottom: 0;
+      border: 1px solid rgba(255,255,255,0.08); border-bottom: none;
+      border-radius: 94px 94px 0 0;
+      pointer-events: none;
+    }
+    [data-theme="light"] .stone-arch::before { border-color: rgba(0,0,0,0.07); }
+    .stone-arch-cross {
+      font-size: 1.8rem; color: var(--stone-engraving-soft);
+      line-height: 1; position: relative; z-index: 1;
+    }
+    .stone-type-badge {
+      background: var(--stone-engraving); color: var(--stone-base);
+      font-family: 'Nunito Sans', sans-serif; font-size: 0.65rem; font-weight: 800;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      padding: 5px 16px; border-radius: 30px;
+      display: inline-block; white-space: nowrap;
+      position: relative; z-index: 1;
+    }
+    [data-theme="light"] .stone-type-badge { color: #f4f2ed; }
+
+    /* Body — fixed height, clips epitaph to whole lines only */
+    .stone-body {
+      width: 220px;
+      height: 260px;
+      background: linear-gradient(180deg, var(--stone-mid) 0%, var(--stone-base) 100%);
+      border-left: 1px solid var(--stone-border);
+      border-right: 1px solid var(--stone-border);
+      border-bottom: 1px solid var(--stone-border);
+      display: flex; flex-direction: column;
+      padding: 16px 22px 20px;
+      overflow: hidden;
+      flex-shrink: 0;
+      box-sizing: border-box;
+    }
+    /* top rule inside body */
+    .stone-body::before {
+      content: ''; display: block; flex-shrink: 0;
+      border-top: 1px solid rgba(255,255,255,0.15);
+      margin-bottom: 12px;
+    }
+    [data-theme="light"] .stone-body::before { border-top-color: rgba(0,0,0,0.12); }
+
+    h4.stone-prefix {
+      font-family: 'Nunito Sans', sans-serif; font-size: 0.76rem; font-weight: 700;
+      color: var(--stone-engraving-soft); text-align: center;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      margin-bottom: 6px; flex-shrink: 0;
+    }
+    h3.stone-name {
+      font-family: 'Playfair Display', serif; font-weight: 900; font-size: 1.45rem;
+      color: var(--stone-engraving); text-align: center; line-height: 1.18;
+      margin-bottom: 6px; word-break: break-word; flex-shrink: 0;
+    }
+    p.stone-dates {
+      font-family: 'Nunito Sans', sans-serif; font-size: 0.8rem; font-weight: 700;
+      color: var(--stone-engraving-soft); text-align: center;
+      letter-spacing: 0.18em; flex-shrink: 0;
+    }
+    hr.stone-line {
+      border: none; border-top: 1px solid rgba(255,255,255,0.15);
+      margin: 12px 0; flex-shrink: 0;
+    }
+    [data-theme="light"] hr.stone-line { border-top-color: rgba(0,0,0,0.12); }
+
+    /* Epitaph wrap — JS sets max-height to exact multiple of line-height
+       so overflow:hidden clips at a clean whole-line boundary, never mid-line */
+    .stone-epitaph-wrap {
+      flex: 1;
+      overflow: hidden;
+      min-height: 0;
+    }
+    p.stone-epitaph {
+      font-size: 0.88rem; font-style: italic;
+      color: var(--stone-engraving-soft); text-align: center;
+      line-height: 1.55;
+      word-break: break-word;
+      margin: 0;
+    }
+
+    /* Plinths — thinner border, stepped wider */
+    .stone-plinth-1 {
+      width: 240px;
+      height: 18px;
+      background: var(--stone-base);
+      border: 1px solid var(--stone-border);
+      border-top: none;
+      flex-shrink: 0;
+    }
+    .stone-plinth-2 {
+      width: 260px;
+      height: 22px;
+      background: linear-gradient(180deg, var(--stone-base), var(--stone-mid));
+      border: 1px solid var(--stone-border);
+      border-top: none;
+      border-radius: 0 0 4px 4px;
+      flex-shrink: 0;
+    }
+
+    /* FORM OVERLAY */
+    .form-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.84); z-index: 500;
+      justify-content: center; align-items: flex-start;
+      padding: 40px 20px; overflow-y: auto;
+    }
+    .form-overlay.active { display: flex; }
+    .form-panel {
+      background: var(--bg2); border: 1px solid var(--border-strong);
+      border-top: 3px solid var(--text);
+      max-width: 640px; width: 100%;
+      padding: 52px 48px 48px; position: relative;
+      animation: panelRise 0.3s ease; margin: auto;
+    }
+    @keyframes panelRise {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .panel-close {
+      position: absolute; top: 18px; right: 20px;
+      background: none; border: none; color: var(--text-secondary);
+      font-size: 1.3rem; cursor: pointer; transition: color 0.2s; line-height: 1;
+    }
+    .panel-close:hover { color: var(--text); }
+    .form-header { text-align: center; margin-bottom: 40px; }
+    h2.form-heading {
+      font-family: 'Playfair Display', serif; font-weight: 900; font-size: 2rem;
+      color: var(--text); margin-bottom: 10px;
+    }
+    p.form-tagline { font-size: 1rem; color: var(--text-secondary); line-height: 1.5; }
+    .field-group { margin-bottom: 26px; }
+    label.field-label {
+      display: block; font-family: 'Nunito Sans', sans-serif;
+      font-size: 0.74rem; font-weight: 800;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--text); margin-bottom: 10px;
+    }
+    label.field-label span.field-hint {
+      font-family: 'Inter', sans-serif; font-size: 0.74rem; font-weight: 400;
+      letter-spacing: 0; text-transform: none; color: var(--text-secondary); margin-left: 6px;
+    }
+    input[type="text"], input[type="url"], textarea {
+      width: 100%; background: transparent;
+      border: none; border-bottom: 1px solid var(--border-strong);
+      padding: 10px 2px; color: var(--text);
+      font-family: 'Inter', sans-serif; font-size: 1rem;
+      outline: none; transition: border-color 0.2s;
+    }
+    input[type="text"]:focus,
+    input[type="url"]:focus { border-bottom-color: var(--text); }
+    textarea {
+      resize: vertical; min-height: 110px;
+      padding: 12px; border: 1px solid var(--border-strong);
+      font-size: 1rem; line-height: 1.6;
+    }
+    textarea:focus { border-color: var(--text); }
+    input::placeholder, textarea::placeholder { color: var(--text-secondary); opacity: 0.6; }
+
+    .field-error {
+      font-family: 'Nunito Sans', sans-serif; font-size: 0.72rem;
+      color: #e57373; margin-top: 5px; display: none;
+    }
+
+    /* Year dropdowns */
+    .year-select {
+      width: 100%; background: var(--bg2);
+      border: none; border-bottom: 1px solid var(--border-strong);
+      padding: 10px 2px; color: var(--text);
+      font-family: 'Inter', sans-serif; font-size: 1rem;
+      outline: none; cursor: pointer; transition: border-color 0.2s;
+      appearance: none; -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(255,255,255,0.5)' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 6px center; padding-right: 26px;
+    }
+    [data-theme="light"] .year-select {
+      background-color: var(--bg2);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(0,0,0,0.5)' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    }
+    .year-select:focus { border-bottom-color: var(--text); }
+    .year-select option { background: #141414; color: #fff; }
+    [data-theme="light"] .year-select option { background: #eae8e3; color: #111; }
+
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+    /* type + cause buttons */
+    .cause-grid { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
+    .cause-btn {
+      background: transparent; border: 1px solid var(--border-strong);
+      color: var(--text-secondary); font-family: 'Inter', sans-serif;
+      font-size: 0.88rem; font-weight: 500;
+      padding: 9px 16px; cursor: pointer; transition: all 0.18s; border-radius: 2px;
+    }
+    .cause-btn:hover { color: var(--text); border-color: var(--text); }
+    .cause-btn.selected { background: var(--text); color: var(--bg); border-color: var(--text); }
+    #otherCauseWrap, #otherTypeWrap { margin-top: 14px; display: none; }
+
+    .burial-date-display {
+      font-family: 'Nunito Sans', sans-serif; font-size: 0.9rem; color: var(--text-secondary);
+      padding: 10px 2px; border-bottom: 1px solid var(--border);
+    }
+
+    .submit-btn {
+      width: 100%; margin-top: 32px; padding: 16px;
+      background: var(--text); color: var(--bg); border: none;
+      font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.1rem;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      cursor: pointer; transition: opacity 0.2s;
+    }
+    .submit-btn:hover { opacity: 0.84; }
+
+    /* MODALS */
+    .modal-overlay, .about-overlay, .privacy-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.84); z-index: 1000;
+      justify-content: center; align-items: flex-start;
+      padding: 40px 20px; overflow-y: auto;
+    }
+    .modal-overlay.active, .about-overlay.active, .privacy-overlay.active { display: flex; }
+    .modal-box, .about-box, .privacy-box {
+      background: var(--bg2); border: 1px solid var(--border-strong);
+      border-top: 3px solid var(--text); max-width: 560px; width: 100%;
+      padding: 52px 44px 40px; position: relative; animation: panelRise 0.3s ease; margin: auto;
+    }
+    .modal-cross { text-align: center; font-size: 1.5rem; color: var(--text-secondary); margin-bottom: 10px; }
+    h2.modal-name {
+      font-family: 'Playfair Display', serif; font-weight: 900; font-size: 2rem;
+      color: var(--text); text-align: center; line-height: 1.15;
+    }
+    p.modal-meta {
+      font-family: 'Nunito Sans', sans-serif; font-size: 0.74rem; color: var(--text-secondary);
+      text-align: center; letter-spacing: 0.14em; margin: 10px 0 24px;
+    }
+    hr.modal-divider { border: none; border-top: 1px solid var(--border); margin: 18px 0; }
+    .modal-label {
+      font-family: 'Nunito Sans', sans-serif; font-size: 0.7rem; font-weight: 800;
+      letter-spacing: 0.22em; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 8px;
+    }
+    p.modal-text { font-style: italic; color: var(--text-secondary); font-size: 1rem; line-height: 1.75; }
+    .modal-cause-tag {
+      display: inline-block; font-family: 'Nunito Sans', sans-serif;
+      font-size: 0.7rem; font-weight: 800; color: var(--text);
+      border: 1px solid var(--border-strong); padding: 5px 14px;
+      text-transform: uppercase; letter-spacing: 0.18em;
+    }
+
+    /* About */
+    h2.about-title { font-family: 'Playfair Display', serif; font-weight: 900; font-size: 1.8rem; margin-bottom: 16px; color: var(--text); }
+    p.about-body { font-size: 1rem; color: var(--text-secondary); line-height: 1.78; margin-bottom: 14px; }
+    hr.about-divider { border: none; border-top: 1px solid var(--border); margin: 28px 0; }
+    h3.faq-heading { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.3rem; color: var(--text); margin-bottom: 20px; }
+    .faq-item { margin-bottom: 22px; }
+    h4.faq-q { font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.95rem; color: var(--text); margin-bottom: 6px; }
+    p.faq-a { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.7; }
+    .about-sign { font-family: 'Nunito Sans', sans-serif; font-size: 0.74rem; letter-spacing: 0.1em; color: var(--text-secondary); margin-top: 28px; }
+
+    /* Privacy */
+    h2.privacy-title { font-family: 'Playfair Display', serif; font-weight: 900; font-size: 1.8rem; margin-bottom: 20px; color: var(--text); }
+    p.privacy-body { font-size: 1rem; color: var(--text-secondary); line-height: 1.78; margin-bottom: 14px; }
+    h4.privacy-section { font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.95rem; color: var(--text); margin: 20px 0 6px; }
+
+    /* BURIAL LOADING */
+    .burial-loading {
+      display: none; position: fixed; inset: 0; background: var(--bg);
+      z-index: 2000; flex-direction: column; align-items: center; justify-content: center; gap: 28px;
+    }
+    .burial-loading.active { display: flex; }
+    .burial-coffin { font-size: 3.2rem; animation: coffinSink 0.9s ease-in-out infinite alternate; }
+    @keyframes coffinSink {
+      from { transform: translateY(-10px); }
+      to   { transform: translateY(10px); }
+    }
+    .burial-msg {
+      font-family: 'Playfair Display', serif; font-weight: 700; font-style: italic;
+      font-size: 1.5rem; color: var(--text); letter-spacing: 0.04em;
+      animation: msgFade 0.6s ease both;
+    }
+    @keyframes msgFade {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .burial-dots { display: flex; gap: 8px; }
+    .burial-dots span {
+      width: 7px; height: 7px; border-radius: 50%; background: var(--text-secondary);
+      animation: dotPulse 1.4s ease-in-out infinite;
+    }
+    .burial-dots span:nth-child(2) { animation-delay: 0.25s; }
+    .burial-dots span:nth-child(3) { animation-delay: 0.5s; }
+    @keyframes dotPulse {
+      0%, 80%, 100% { opacity: 0.2; transform: scale(0.8); }
+      40%           { opacity: 1;   transform: scale(1.15); }
+    }
+
+    /* REVEAL POPUP */
+    .reveal-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.88); z-index: 1500;
+      justify-content: center; align-items: center;
+      padding: 40px 20px; overflow-y: auto;
+    }
+    .reveal-overlay.active { display: flex; }
+    .reveal-box {
+      background: var(--bg2); border: 1px solid var(--border-strong);
+      border-top: 3px solid var(--text); max-width: 380px; width: 100%;
+      padding: 40px 32px 32px; position: relative;
+      animation: revealRise 0.55s cubic-bezier(0.22,1,0.36,1) both;
+      margin: auto; text-align: center;
+    }
+    @keyframes revealRise {
+      from { opacity: 0; transform: translateY(32px) scale(0.96); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .reveal-headline {
+      font-family: 'Playfair Display', serif; font-weight: 900; font-style: italic;
+      font-size: 1.25rem; color: var(--text); margin-bottom: 6px; line-height: 1.3;
+    }
+    .reveal-sub {
+      font-family: 'Nunito Sans', sans-serif; font-size: 0.78rem; color: var(--text-secondary);
+      letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 26px;
+    }
+    .reveal-stone-wrap { display: flex; justify-content: center; margin-bottom: 26px; }
+    .reveal-stone-inner {
+      display: flex; flex-direction: column; align-items: center;
+      filter: drop-shadow(0 4px 14px var(--shadow-color));
+      animation: stoneAppear 0.6s 0.2s cubic-bezier(0.22,1,0.36,1) both;
+    }
+    @keyframes stoneAppear {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    /* reveal stone uses the same .stone-arch, .stone-body, .stone-plinth-* classes */
+    .reveal-close-btn {
+      width: 100%; background: transparent; border: 1px solid var(--border-strong);
+      color: var(--text-secondary); font-family: 'Nunito Sans', sans-serif;
+      font-size: 0.74rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+      padding: 12px; cursor: pointer; transition: all 0.2s;
+    }
+    .reveal-close-btn:hover { color: var(--text); border-color: var(--text); }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border); padding: 28px 32px;
+      display: flex; align-items: center; justify-content: space-between;
+      font-family: 'Nunito Sans', sans-serif; font-size: 0.74rem; font-weight: 700;
+      color: var(--text-secondary); letter-spacing: 0.18em; text-transform: uppercase;
+    }
+    .footer-left button {
+      background: none; border: none; font-family: 'Nunito Sans', sans-serif;
+      font-size: 0.74rem; font-weight: 700; color: var(--text-secondary);
+      letter-spacing: 0.18em; text-transform: uppercase; cursor: pointer; padding: 0; transition: color 0.2s;
+    }
+    .footer-left button:hover { color: var(--text); }
+    .footer-center { text-align: center; display: flex; flex-direction: column; gap: 6px; }
+    .footer-tagline { opacity: 1; }
+    .footer-legal { opacity: 0.5; font-size: 0.66rem; letter-spacing: 0.12em; }
+    .footer-right { text-align: right; }
+    .footer-version {
+      font-size: 0.66rem; letter-spacing: 0.12em; opacity: 0.5;
+    }
+    .about-version {
+      font-family: 'Nunito Sans', sans-serif; font-size: 0.66rem; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--text-secondary); opacity: 0.5;
+      text-align: center; margin-top: 24px;
+    }
+
+    .empty-state {
+      text-align: center; padding: 64px 20px; grid-column: 1 / -1;
+      color: var(--text-secondary); font-style: italic; font-size: 1.05rem;
+    }
+    .toast {
+      position: fixed; bottom: 28px; left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: var(--text); color: var(--bg);
+      font-family: 'Nunito Sans', sans-serif; font-size: 0.77rem; font-weight: 800;
+      letter-spacing: 0.12em; padding: 12px 24px;
+      z-index: 9000; transition: transform 0.25s ease;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+
+    /* TABLET — 2 columns */
+    @media (max-width: 1024px) {
+      .graves-grid { grid-template-columns: repeat(2, 1fr); gap: 48px; }
+      .graveyard-section { padding: 0 32px; }
+    }
+
+    /* MOBILE — 1 column */
+    @media (max-width: 640px) {
+      .graves-grid { grid-template-columns: 1fr; gap: 40px; }
+      .graveyard-section { padding: 0 20px; }
+      .two-col { grid-template-columns: 1fr; }
+      .form-panel, .modal-box, .about-box, .privacy-box { padding: 36px 24px 28px; }
+      nav { padding: 0 16px; }
+      footer { flex-direction: column; gap: 14px; text-align: center; }
+      .footer-right { text-align: center; }
+      .graveyard-search-row { justify-content: stretch; }
+      .search-filter-wrap { max-width: 100%; min-width: unset; width: 100%; }
+      .waitlist-form-row { flex-direction: column; }
+      .waitlist-btn { width: 100%; }
+      /* stone-whole stays 260px — grid is 1-col so card is wide enough.
+         % padding on .grave-card-stone automatically scales the breathing room. */
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-left">
+    <button class="nav-about" onclick="openAbout()">About</button>
+  </div>
+  <div class="nav-brand">RIP My Idea</div>
+  <div class="nav-right">
+    <button class="theme-toggle" id="themeBtn" onclick="toggleTheme()" title="Toggle theme">☽</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">A graveyard for ideas that never made it</div>
+  <h1 class="hero-title">Bury What You<br><em>Couldn't Build.</em></h1>
+  <div class="death-toll">
+    <span class="toll-number" id="tollNumber">0</span>
+    <span class="toll-label">Ideas Buried</span>
+  </div>
+  <div class="hero-cta">
+    <button class="bury-hero-btn" onclick="openForm()">Bury My Idea</button>
+  </div>
+</section>
+
+<!-- WAITLIST -->
+<section class="waitlist-section">
+  <div class="waitlist-eyebrow">Coming Soon</div>
+  <h2 class="waitlist-heading">The public graveyard is on its way.</h2>
+  <p class="waitlist-sub">Soon every buried idea will be visible to the world — a shared monument to everything we tried and couldn't finish. Leave your email and we'll let you know when it's ready.</p>
+  <div class="waitlist-form-row">
+    <input class="waitlist-input" type="email" id="waitlistEmail" placeholder="your@email.com" />
+    <button class="waitlist-btn" onclick="submitWaitlist()">Notify Me</button>
+  </div>
+  <div class="waitlist-msg" id="waitlistMsg"></div>
+</section>
+
+<!-- GRAVEYARD -->
+<section class="graveyard-section">
+  <hr class="graveyard-hr">
+  <div class="graveyard-search-row">
+    <div class="search-filter-wrap">
+      <div class="search-input-wrap">
+        <span class="search-icon">&#9906;</span>
+        <input type="text" id="graveSearch" placeholder="Search..." oninput="applyFilters()" />
+      </div>
+      <div class="filter-btn" id="filterBtnWrap">
+        <div class="filter-icon"><span></span><span></span><span></span></div>
+        <div class="filter-dropdown" id="filterDropdown">
+          <button class="filter-option active" onclick="setSort('newest',this)">Newest Graves First</button>
+          <button class="filter-option" onclick="setSort('oldest',this)">Oldest Graves First</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <h2 class="section-heading">— The Fallen —</h2>
+  <div class="graves-grid" id="gravesGrid"></div>
+</section>
+
+<!-- FORM OVERLAY -->
+<div class="form-overlay" id="formOverlay" onclick="closeFormBackdrop(event)">
+  <div class="form-panel">
+    <button class="panel-close" onclick="closeForm()">✕</button>
+    <div class="form-header">
+      <h2 class="form-heading">Bury My Idea</h2>
+      <p class="form-tagline">Every unfinished idea deserves a proper burial.</p>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">Name of the Deceased *</label>
+      <input type="text" id="ideaName" placeholder="e.g. UberForDogs, The Next Facebook…" />
+    </div>
+
+    <div class="two-col">
+      <div class="field-group">
+        <label class="field-label">Born *</label>
+        <select class="year-select" id="ideaBorn" onchange="updateDiedYears()">
+          <option value="">Select year</option>
+        </select>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Died *</label>
+        <select class="year-select" id="ideaDied">
+          <option value="">Select year</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">The Deceased Was A * <span class="field-hint">— Select one</span></label>
+      <div class="cause-grid" id="typeGrid">
+        <button class="cause-btn" onclick="selectType(this,'Idea')">Idea</button>
+        <button class="cause-btn" onclick="selectType(this,'Side Project')">Side Project</button>
+        <button class="cause-btn" onclick="selectType(this,'App / Website')">App / Website</button>
+        <button class="cause-btn" onclick="selectType(this,'Product')">Product</button>
+        <button class="cause-btn" onclick="selectType(this,'SaaS')">SaaS</button>
+        <button class="cause-btn" onclick="selectType(this,'Startup')">Startup</button>
+        <button class="cause-btn" onclick="selectType(this,'Business')">Business</button>
+        <button class="cause-btn" onclick="selectType(this,'Other')">Other</button>
+      </div>
+      <div id="otherTypeWrap">
+        <input type="text" id="otherTypeText" placeholder="Describe what it was…" maxlength="100" oninput="updateOtherTypeCount()" />
+        <div style="font-family:'Nunito Sans',sans-serif;font-size:0.72rem;color:var(--text-secondary);text-align:right;margin-top:5px"><span id="otherTypeCount">0</span> / 100</div>
+      </div>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">Cause of Death * <span class="field-hint">— Select one</span></label>
+      <div class="cause-grid" id="causeGrid">
+        <button class="cause-btn" onclick="selectCause(this,'Burnout')">Burnout</button>
+        <button class="cause-btn" onclick="selectCause(this,'Lost Interest')">Lost Interest</button>
+        <button class="cause-btn" onclick="selectCause(this,'No Money')">No Money</button>
+        <button class="cause-btn" onclick="selectCause(this,'No Users')">No Users</button>
+        <button class="cause-btn" onclick="selectCause(this,'Too Much Competition')">Too Much Competition</button>
+        <button class="cause-btn" onclick="selectCause(this,'Co-founder Drama')">Co-founder Drama</button>
+        <button class="cause-btn" onclick="selectCause(this,'Life Got in the Way')">Life Got in the Way</button>
+        <button class="cause-btn" onclick="selectCause(this,'Technical Debt')">Technical Debt</button>
+        <button class="cause-btn" onclick="selectCause(this,'Pivoted to Death')">Pivoted to Death</button>
+        <button class="cause-btn" onclick="selectCause(this,'Reality Check')">Reality Check</button>
+        <button class="cause-btn" onclick="selectCause(this,'Skill Gap')">Skill Gap</button>
+        <button class="cause-btn" onclick="selectCause(this,'Fear of Failure')">Fear of Failure</button>
+        <button class="cause-btn" onclick="selectCause(this,'Shiny Object Syndrome')">Shiny Object Syndrome</button>
+        <button class="cause-btn" onclick="selectCause(this,'Over-Engineered')">Over-Engineered</button>
+        <button class="cause-btn" onclick="selectCause(this,'Procrastination')">Procrastination</button>
+        <button class="cause-btn" onclick="selectCause(this,'Other')">Other</button>
+      </div>
+      <div id="otherCauseWrap">
+        <input type="text" id="otherCauseText" placeholder="Describe the cause of death…" maxlength="100" oninput="updateOtherCount()" />
+        <div style="font-family:'Nunito Sans',sans-serif;font-size:0.72rem;color:var(--text-secondary);text-align:right;margin-top:5px"><span id="otherCount">0</span> / 100</div>
+      </div>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">Epitaph <span class="field-hint">— Optional</span></label>
+      <textarea id="ideaEpitaph" placeholder="Here lies an idea that once kept you up at night. What did it mean to you? What killed it? Be honest — it's dead now."></textarea>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">Your Name <span class="field-hint">— Optional. Letters only.</span></label>
+      <input type="text" id="ideaFounder" placeholder="The grief-stricken founder…" oninput="validateName(this)" />
+      <div class="field-error" id="founderError">Please enter a valid name — letters and spaces only.</div>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">Your Website <span class="field-hint">— Optional</span></label>
+      <input type="text" id="ideaWebsite" placeholder="https://yoursite.com" oninput="validateUrl(this,'websiteError')" />
+      <div class="field-error" id="websiteError">Please enter a valid URL — e.g. https://yoursite.com</div>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">Your Social <span class="field-hint">— Optional</span></label>
+      <input type="text" id="ideaSocial" placeholder="https://x.com/yourhandle" oninput="validateUrl(this,'socialError')" />
+      <div class="field-error" id="socialError">Please enter a valid URL — e.g. https://x.com/yourhandle</div>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">Burial Date</label>
+      <div class="burial-date-display" id="burialDateDisplay">—</div>
+    </div>
+
+    <button class="submit-btn" onclick="buryIdea()">RIP My Idea</button>
+  </div>
+</div>
+
+<!-- DETAIL MODAL -->
+<div class="modal-overlay" id="modal" onclick="closeModalBackdrop(event)">
+  <div class="modal-box">
+    <button class="panel-close" onclick="closeModal()">✕</button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<!-- ABOUT MODAL -->
+<div class="about-overlay" id="aboutOverlay" onclick="closeAboutBackdrop(event)">
+  <div class="about-box">
+    <button class="panel-close" onclick="closeAbout()">✕</button>
+    <h2 class="about-title">About RIP My Idea</h2>
+    <p class="about-body">RIP My Idea is a digital graveyard for the startups, side projects, apps, products, and dreams that never made it — not because they were bad ideas, but because building things is hard. Money runs out. Passion fades. Co-founders fight. Life gets in the way. None of that makes your idea less worthy of a proper farewell.</p>
+    <p class="about-body">This is a place for closure. You tried something. You deserve to mark it. Write the epitaph, lay it to rest, and move forward knowing it happened and it mattered.</p>
+    <p class="about-body">Please note that all user-submitted content is subject to moderation. Any content determined to be harmful, defamatory, misleading, abusive, or in violation of applicable laws or community standards may be removed by our content moderation team at their sole discretion and without prior notice.</p>
+    <hr class="about-divider">
+    <h3 class="faq-heading">Frequently Asked Questions</h3>
+    <div class="faq-item">
+      <h4 class="faq-q">Who is this for?</h4>
+      <p class="faq-a">Anyone who has ever started something and couldn't see it through — founders, developers, designers, writers, students, and dreamers of all kinds. If you had an idea and let it go, this graveyard has a plot with your name on it.</p>
+    </div>
+    <div class="faq-item">
+      <h4 class="faq-q">Is my submission visible to others?</h4>
+      <p class="faq-a">Right now, gravestones are stored locally in your browser — only you can see them on your device. A shared public graveyard is coming in the next version, where every buried idea will be visible to the world. Sign up for the waitlist to be notified.</p>
+    </div>
+    <div class="faq-item">
+      <h4 class="faq-q">Can I submit someone else's idea?</h4>
+      <p class="faq-a">Please only submit ideas, projects, or businesses that you personally worked on or were directly involved with. Submitting content about others without their knowledge or consent is not permitted and may be removed by our moderation team.</p>
+    </div>
+    <div class="faq-item">
+      <h4 class="faq-q">What happens to content that violates the rules?</h4>
+      <p class="faq-a">User-submitted content that is found to be harmful, false, defamatory, abusive, or otherwise inappropriate will be removed. We reserve the right to remove any submission at our discretion in order to maintain the integrity and respectful tone of the platform.</p>
+    </div>
+    <div class="faq-item">
+      <h4 class="faq-q">Why are only letters allowed in the name field?</h4>
+      <p class="faq-a">The name field is for the person's real name or a recognisable alias. We restrict it to letters to keep the graveyard respectful and to prevent random characters or numbers from appearing where a person's name should be.</p>
+    </div>
+    <div class="faq-item">
+      <h4 class="faq-q">Can I resurrect my idea?</h4>
+      <p class="faq-a">No. Once buried, an idea rests in peace. This is a graveyard, not a hospital. That said — if someone else picks it up and builds it, that's a story worth telling.</p>
+    </div>
+    <div class="faq-item">
+      <h4 class="faq-q">What is the waitlist for?</h4>
+      <p class="faq-a">The next version of RIP My Idea will launch a real shared public graveyard — where every buried idea is visible to the world. Leave your email and you will be among the first to know when it goes live.</p>
+    </div>
+    <div class="about-sign">Rest in pieces, every last one of them.</div>
+    <div class="about-version">&#x2767;&nbsp; The First Burial &nbsp;·&nbsp; v0.1 Beta</div>
+  </div>
+</div>
+
+<!-- PRIVACY MODAL -->
+<div class="privacy-overlay" id="privacyOverlay" onclick="closePrivacyBackdrop(event)">
+  <div class="privacy-box">
+    <button class="panel-close" onclick="closePrivacy()">✕</button>
+    <h2 class="privacy-title">Privacy Policy</h2>
+    <p class="privacy-body">This Privacy Policy describes how RIP My Idea collects, uses, and handles information provided by users of this platform. By accessing or using this site, you acknowledge and agree to the terms described below.</p>
+    <h4 class="privacy-section">Data Storage</h4>
+    <p class="privacy-body">All gravestone data submitted through this platform is currently stored locally in your browser via localStorage. No personal information is transmitted to or retained on any external server at this time. Your data remains entirely on your own device.</p>
+    <h4 class="privacy-section">Information You Provide</h4>
+    <p class="privacy-body">When submitting a gravestone, you may optionally provide your name, website URL, and social media profile link. This information is stored locally and, in future versions of the platform, may be displayed publicly as part of your gravestone listing. Providing this information is entirely voluntary.</p>
+    <h4 class="privacy-section">Email Address and Waitlist</h4>
+    <p class="privacy-body">If you choose to join the waitlist, your email address will be collected and stored securely for the sole purpose of notifying you when the public graveyard launches. We will not share, sell, or otherwise disclose your email address to any third party, nor will we use it for any purpose beyond the scope of this notification without your explicit prior consent.</p>
+    <h4 class="privacy-section">User-Generated Content and Moderation</h4>
+    <p class="privacy-body">Content submitted by users — including gravestone names, epitaphs, and associated details — is intended for public display in future versions of this platform. Users are advised not to include sensitive personal information in their submissions. RIP My Idea reserves the right to review, edit, or permanently remove any user-generated content that is found to be harmful, defamatory, misleading, abusive, unlawful, or otherwise in violation of applicable laws or the community standards of this platform. Such removal may occur without prior notice to the submitting user.</p>
+    <h4 class="privacy-section">Cookies and Tracking</h4>
+    <p class="privacy-body">We do not use tracking cookies, advertising cookies, or any third-party analytics services. The only browser storage mechanism used by this platform is localStorage, which stores gravestone data locally on your device.</p>
+    <h4 class="privacy-section">Changes to This Policy</h4>
+    <p class="privacy-body">This Privacy Policy may be updated periodically as the platform evolves. Continued use of the site following the publication of any changes constitutes your acceptance of the revised policy. The most current version of this policy will always be available on this page.</p>
+  </div>
+</div>
+
+<!-- BURIAL LOADING -->
+<div class="burial-loading" id="burialLoading">
+  <div class="burial-coffin">⚰</div>
+  <div class="burial-msg" id="burialMsg">Digging the grave…</div>
+  <div class="burial-dots"><span></span><span></span><span></span></div>
+</div>
+
+<!-- REVEAL POPUP -->
+<div class="reveal-overlay" id="revealOverlay">
+  <div class="reveal-box">
+    <div class="reveal-headline" id="revealHeadline"></div>
+    <div class="reveal-sub" id="revealSub"></div>
+    <div class="reveal-stone-wrap">
+      <div class="stone-whole" style="animation: stoneAppear 0.6s 0.2s cubic-bezier(0.22,1,0.36,1) both;">
+        <div class="stone-arch">
+          <span class="stone-arch-cross">✝</span>
+          <span id="revealArchBadge"></span>
+        </div>
+        <div class="stone-body" id="revealStoneBody"></div>
+        <div class="stone-plinth-1"></div>
+        <div class="stone-plinth-2"></div>
+      </div>
+    </div>
+    <button class="reveal-close-btn" onclick="closeReveal()">View in Graveyard</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<footer>
+  <div class="footer-left"><button onclick="openPrivacy()">Privacy Policy</button></div>
+  <div class="footer-center"></div>
+  <div class="footer-right">
+    <div class="footer-legal">&copy; <span id="footerYear"></span> RIP My Idea &nbsp;·&nbsp; All Rights Reserved</div>
+  </div>
+</footer>
+
+<script>
+  let graves = JSON.parse(localStorage.getItem('ideaGrave_v11') || '[]');
+  let selectedCause = '';
+  let selectedType  = '';
+  let currentSort   = 'newest';
+  const CUR_YEAR    = new Date().getFullYear();
+
+  // ---- YEAR DROPDOWNS ----
+  function populateYears() {
+    const b = document.getElementById('ideaBorn');
+    const d = document.getElementById('ideaDied');
+    for (let y = CUR_YEAR; y >= 1900; y--) {
+      b.add(new Option(y, y));
+      d.add(new Option(y, y));
+    }
+  }
+  function updateDiedYears() {
+    const bornVal = parseInt(document.getElementById('ideaBorn').value) || 1900;
+    const dSel    = document.getElementById('ideaDied');
+    const prev    = dSel.value;
+    dSel.innerHTML = '<option value="">Select year</option>';
+    for (let y = CUR_YEAR; y >= bornVal; y--) dSel.add(new Option(y, y));
+    if (prev && parseInt(prev) >= bornVal) dSel.value = prev;
+  }
+  populateYears();
+
+  // ---- VALIDATION ----
+  function validateName(input) {
+    const err = document.getElementById('founderError');
+    err.style.display = (input.value && !/^[a-zA-Z\s'.,-]+$/.test(input.value)) ? 'block' : 'none';
+  }
+  function validateUrl(input, errId) {
+    const val = input.value.trim();
+    const err = document.getElementById(errId);
+    if (!val) { err.style.display = 'none'; return; }
+    err.style.display = isValidUrl(val) ? 'none' : 'block';
+  }
+  function isValidUrl(val) {
+    if (!val) return true;
+    try { const u = new URL(val); return u.protocol==='http:'||u.protocol==='https:'; }
+    catch(e) { return false; }
+  }
+  function isValidName(val) {
+    return !val || /^[a-zA-Z\s'.,-]+$/.test(val);
+  }
+
+  // ---- DATA ----
+  const CAUSE_EPITAPHS = {
+    'Burnout':['It started with passion and ended with exhaustion. The fire burned bright — and then burned out completely.','Late nights turned into early mornings turned into nothing at all. The idea didn\'t die. The founder did, a little.','We gave it everything. Unfortunately, everything wasn\'t sustainable.'],
+    'Lost Interest':['It was everything — until something else was. No dramatic ending. Just a slow fade to silence.','The passion that built it couldn\'t outlast the boredom that buried it.','It turns out the idea was more exciting as an idea than as a reality. A lesson learned the hard way.'],
+    'No Money':['Great idea. Empty bank account. The math never worked out.','The runway ended before the product could take off. RIP to a vision that deserved funding.','It wasn\'t killed by the market. It was killed by the invoice.'],
+    'No Users':['We built it. Nobody came. Turns out, \'if you build it\' was not the whole sentence.','The product was real. The demand was imaginary. A painful but universal lesson.','Somewhere out there is a user who would have loved this. We just never found them.'],
+    'Too Much Competition':['It was a great idea. Twelve other people had the same great idea, six months earlier.','Entered a market already crowded with giants. Couldn\'t find the gap.','The space was too loud. This idea couldn\'t find its voice in time.'],
+    'Co-founder Drama':['The idea survived every technical challenge. It did not survive the partnership.','Two founders. One vision. Zero agreement on what that vision actually meant.','Built together, abandoned apart. The fallout outlasted the product.'],
+    'Life Got in the Way':['Jobs, family, health, and the general chaos of being human conspired against this idea.','It was always \'after this one thing\'. There was always one more thing.','Life had a different roadmap. This idea never made the final cut.'],
+    'Technical Debt':['We moved fast. We broke things. We never fixed them. Eventually, the things broke us.','The codebase became a graveyard long before the idea did.','It started as a quick prototype. It ended as an unmaintainable monument to bad decisions.'],
+    'Pivoted to Death':['It started as one thing. Then another. Then something else entirely. By the end, nobody remembered what we were building.','We pivoted so many times we lost the original idea somewhere in the turns.','In search of product-market fit, we iterated ourselves out of existence.'],
+    'Reality Check':['The idea was brilliant in theory. Reality, however, had notes.','The TAM was smaller than the spreadsheet suggested. Much smaller.','A business plan is not a business. We learned this the expensive way.'],
+    'Skill Gap':['The vision was clear. The execution was not. The gap between knowing what to build and knowing how to build it proved fatal.','It needed skills we didn\'t have, time we didn\'t have to learn them, and money we didn\'t have to hire them.','We knew what we wanted. We just didn\'t know how to make it.'],
+    'Fear of Failure':['It never launched because launching meant it could fail. So it failed quietly, without ever trying.','The idea lived in notebooks and conversations for years. It never made it to the world.','Paralysed by the possibility of rejection, it never got the chance to be accepted.'],
+    'Shiny Object Syndrome':['This idea was abandoned for a newer, shinier idea — which was also abandoned for a newer, shinier idea.','The graveyard of this founder\'s ideas is a long one. This was not the last.','It had a great week. Then something more exciting came along.'],
+    'Over-Engineered':['Version 1 was supposed to be simple. It wasn\'t. Version 2 was never built.','We spent so long making it perfect that we forgot to make it real.','A beautiful, complex, unshippable product. A monument to perfectionism.'],
+    'Procrastination':['It was going to be started on Monday. Then next Monday. Then after the holidays.','The idea was ready. The founder was not. \'Not yet\' became \'never\'.','Tomorrow never came. The idea is still waiting.'],
+    'Other':['It had potential. We had dreams. The universe had other plans.','Here lies a solution to a problem nobody had.','It would have changed everything. Probably.']
+  };
+  const FALLBACK_EPITAPHS = ['It had potential. We had dreams. The universe had other plans.','Built in passion. Abandoned in exhaustion. Remembered with pride and mild regret.','It almost worked. Almost.','Here lies a solution to a problem nobody had.','Conceived at 2am. Died at 2am. The symmetry is poetic.','It would have changed everything. Probably.'];
+  const PREFIXES = ['In Loving Memory Of','Here Lies','Beloved'];
+
+  const REVEAL_MSGS = [
+    { headline: '{name} has been laid to rest.', sub: 'It deserved a proper farewell.' },
+    { headline: '{name} is buried.', sub: 'May it rest in peace, forever.' },
+    { headline: 'Farewell, {name}.', sub: 'The graveyard welcomes another.' }
+  ];
+
+  function getEpitaph(cause, user) {
+    if (user) return user;
+    const pool = CAUSE_EPITAPHS[cause] || FALLBACK_EPITAPHS;
+    return pool[Math.floor(Math.random() * pool.length)];
+  }
+  function save() { localStorage.setItem('ideaGrave_v11', JSON.stringify(graves)); updateToll(); }
+  function updateToll() { document.getElementById('tollNumber').textContent = graves.length; }
+
+  function toggleTheme() {
+    const html = document.documentElement;
+    const isLight = html.getAttribute('data-theme') === 'light';
+    html.setAttribute('data-theme', isLight ? 'dark' : 'light');
+    document.getElementById('themeBtn').textContent = isLight ? '☽' : '☀';
+  }
+
+  function selectType(btn, value) {
+    document.querySelectorAll('#typeGrid .cause-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected'); selectedType = value;
+    document.getElementById('otherTypeWrap').style.display = value==='Other'?'block':'none';
+    if (value!=='Other') document.getElementById('otherTypeText').value = '';
+  }
+  function selectCause(btn, value) {
+    document.querySelectorAll('#causeGrid .cause-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected'); selectedCause = value;
+    document.getElementById('otherCauseWrap').style.display = value==='Other'?'block':'none';
+    if (value!=='Other') document.getElementById('otherCauseText').value = '';
+  }
+  function updateOtherCount() { document.getElementById('otherCount').textContent = document.getElementById('otherCauseText').value.length; }
+  function updateOtherTypeCount() { document.getElementById('otherTypeCount').textContent = document.getElementById('otherTypeText').value.length; }
+
+  function openForm() {
+    document.getElementById('burialDateDisplay').textContent = new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
+    document.getElementById('formOverlay').classList.add('active');
+  }
+  function closeForm() {
+    document.getElementById('formOverlay').classList.remove('active');
+    document.querySelectorAll('.cause-btn').forEach(b => b.classList.remove('selected'));
+    selectedCause=''; selectedType='';
+    document.getElementById('otherCauseWrap').style.display='none';
+    document.getElementById('otherTypeWrap').style.display='none';
+    document.getElementById('ideaBorn').value='';
+    updateDiedYears();
+    ['ideaName','ideaEpitaph','ideaFounder','ideaWebsite','ideaSocial','otherCauseText','otherTypeText'].forEach(id=>{
+      const el=document.getElementById(id); if(el) el.value='';
+    });
+    ['founderError','websiteError','socialError'].forEach(id=>document.getElementById(id).style.display='none');
+  }
+  function closeFormBackdrop(e) { if(e.target===document.getElementById('formOverlay')) closeForm(); }
+
+  function openAbout()  { document.getElementById('aboutOverlay').classList.add('active'); }
+  function closeAbout() { document.getElementById('aboutOverlay').classList.remove('active'); }
+  function closeAboutBackdrop(e) { if(e.target===document.getElementById('aboutOverlay')) closeAbout(); }
+
+  function openPrivacy()  { document.getElementById('privacyOverlay').classList.add('active'); }
+  function closePrivacy() { document.getElementById('privacyOverlay').classList.remove('active'); }
+  function closePrivacyBackdrop(e) { if(e.target===document.getElementById('privacyOverlay')) closePrivacy(); }
+
+  function closeModal() { document.getElementById('modal').classList.remove('active'); }
+  function closeModalBackdrop(e) { if(e.target===document.getElementById('modal')) closeModal(); }
+
+  // Filter
+  document.getElementById('filterBtnWrap').addEventListener('click', function(e) {
+    if (e.target.classList.contains('filter-option')) return;
+    e.stopPropagation();
+    document.getElementById('filterDropdown').classList.toggle('open');
+  });
+  document.addEventListener('click', (e) => {
+    const wrap = document.getElementById('filterBtnWrap');
+    if (wrap && !wrap.contains(e.target)) document.getElementById('filterDropdown').classList.remove('open');
+  });
+  function setSort(type, btn) {
+    currentSort = type;
+    document.querySelectorAll('.filter-option').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('filterDropdown').classList.remove('open');
+    applyFilters();
+  }
+  function applyFilters() {
+    const q = document.getElementById('graveSearch').value.trim().toLowerCase();
+    let filtered = [...graves];
+
+    // Filter: name must START WITH the query (strict, no mid-string matches)
+    if (q) {
+      filtered = filtered.filter(g =>
+        (g.name || '').toLowerCase().startsWith(q)
+      );
+    }
+
+    // Sort by burial date (created field)
+    filtered.sort((a, b) => {
+      const dateA = new Date(a.created || 0);
+      const dateB = new Date(b.created || 0);
+      return currentSort === 'oldest' ? dateA - dateB : dateB - dateA;
+    });
+
+    renderGraves(filtered);
+  }
+
+  // ---- BURY ----
+  function buryIdea() {
+    const name    = document.getElementById('ideaName').value.trim();
+    const born    = document.getElementById('ideaBorn').value;
+    const died    = document.getElementById('ideaDied').value;
+    const founder = document.getElementById('ideaFounder').value.trim();
+    const website = document.getElementById('ideaWebsite').value.trim();
+    const social  = document.getElementById('ideaSocial').value.trim();
+
+    if (!name)          { showToast('Give your idea a name. It deserves that much.'); return; }
+    if (!born)          { showToast('When was it born? Select the year it was conceived.'); return; }
+    if (!died)          { showToast('When did it die? Select the year it was abandoned.'); return; }
+    if (!selectedType)  { showToast('Tell us what it was. Select a type.'); return; }
+    if (!selectedCause) { showToast('Select a cause of death.'); return; }
+    if (!isValidName(founder)) { showToast('Your name should contain letters only.'); return; }
+    if (!isValidUrl(website))  { showToast('Please enter a valid website URL.'); return; }
+    if (!isValidUrl(social))   { showToast('Please enter a valid social URL.'); return; }
+
+    let finalType = selectedType==='Other' ? (document.getElementById('otherTypeText').value.trim()||'Other') : selectedType;
+    let cause     = selectedCause==='Other' ? (document.getElementById('otherCauseText').value.trim()||'Other') : selectedCause;
+    const epitaphRaw = document.getElementById('ideaEpitaph').value.trim();
+    const burialDate = document.getElementById('burialDateDisplay').textContent;
+    const finalEpitaph = getEpitaph(selectedCause, epitaphRaw);
+    const prefix = PREFIXES[Math.floor(Math.random()*PREFIXES.length)];
+
+    const grave = {
+      id:Date.now(), name, prefix, born, died,
+      type:finalType, cause, epitaph:finalEpitaph,
+      founder:founder||'Anonymous',
+      website:website||'', social:social||'',
+      burialDate, created:new Date().toISOString()
+    };
+    graves.unshift(grave);
+    save(); applyFilters(); closeForm();
+    showBurialLoading(grave);
+  }
+
+  // ---- LOADING (6s, 3 messages × 2s each) ----
+  const BURIAL_MSGS = ['Digging the grave…','Laying it to rest…','Saying the last words…'];
+  function showBurialLoading(grave) {
+    const loading = document.getElementById('burialLoading');
+    const msgEl   = document.getElementById('burialMsg');
+    loading.classList.add('active');
+    let i = 0;
+    msgEl.textContent = BURIAL_MSGS[0];
+    const cycle = setInterval(()=>{
+      i++;
+      if (i < BURIAL_MSGS.length) {
+        msgEl.style.animation='none'; void msgEl.offsetWidth; msgEl.style.animation='';
+        msgEl.textContent = BURIAL_MSGS[i];
+      }
+    }, 2000);
+    setTimeout(()=>{ clearInterval(cycle); loading.classList.remove('active'); showReveal(grave); }, 6000);
+  }
+
+  // ---- REVEAL ----
+  function showReveal(grave) {
+    const msg = REVEAL_MSGS[Math.floor(Math.random()*REVEAL_MSGS.length)];
+    document.getElementById('revealHeadline').textContent = msg.headline.replace('{name}', grave.name);
+    document.getElementById('revealSub').textContent = msg.sub;
+
+    // Badge goes into arch
+    document.getElementById('revealArchBadge').innerHTML =
+      grave.type ? `<span class="stone-type-badge">${esc(grave.type)}</span>` : '';
+
+    // Body content
+    document.getElementById('revealStoneBody').innerHTML = `
+      <h4 class="stone-prefix">${esc(grave.prefix)}</h4>
+      <h3 class="stone-name">${esc(grave.name)}</h3>
+      <p class="stone-dates">${esc(grave.born)} — ${esc(grave.died)}</p>
+      <hr class="stone-line">
+      <div class="stone-epitaph-wrap">
+        <p class="stone-epitaph" data-epitaph="${esc(grave.epitaph)}">&#x201c;${esc(grave.epitaph)}&#x201d;</p>
+      </div>`;
+
+    document.getElementById('revealOverlay').classList.add('active');
+
+    // Clamp epitaph in the reveal stone after it is visible and fonts are ready
+    document.fonts.ready.then(() => {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(clampEpitaphsToWholeLines);
+      });
+    });
+  }
+  function closeReveal() {
+    document.getElementById('revealOverlay').classList.remove('active');
+    setTimeout(()=>document.querySelector('.grave-card')?.scrollIntoView({behavior:'smooth',block:'center'}),200);
+  }
+
+  // ---- RENDER ----
+  function renderGraves(list) {
+    const grid = document.getElementById('gravesGrid');
+    if (!list||!list.length) {
+      grid.innerHTML = '<div class="empty-state">The graveyard is empty.<br>Be the first to bury your idea.</div>';
+      return;
+    }
+    grid.innerHTML = list.map((g,i)=>{
+      return `
+      <div class="grave-card" onclick="openModal(${g.id})" style="animation-delay:${Math.min(i*0.06,0.4)}s">
+        <div class="grave-card-stone">
+          <div class="stone-whole">
+            <div class="stone-arch">
+              <span class="stone-arch-cross">✝</span>
+              ${g.type?`<span class="stone-type-badge">${esc(g.type)}</span>`:''}
+            </div>
+            <div class="stone-body">
+              <h4 class="stone-prefix">${esc(g.prefix)}</h4>
+              <h3 class="stone-name">${esc(g.name)}</h3>
+              <p class="stone-dates">${esc(g.born)} — ${esc(g.died)}</p>
+              <hr class="stone-line">
+              <div class="stone-epitaph-wrap">
+                <p class="stone-epitaph" data-epitaph="${esc(g.epitaph)}">&#x201c;${esc(g.epitaph)}&#x201d;</p>
+              </div>
+            </div>
+            <div class="stone-plinth-1"></div>
+            <div class="stone-plinth-2"></div>
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+    // Wait for fonts to fully load before measuring line heights
+    // document.fonts.ready guarantees web fonts are painted before we measure
+    document.fonts.ready.then(() => {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(clampEpitaphsToWholeLines);
+      });
+    });
+  }
+
+  /* Clamp every .stone-epitaph-wrap to whole lines only.
+     Always resets from data-epitaph so resize never compounds quotes. */
+  function clampEpitaphsToWholeLines() {
+    document.querySelectorAll('.stone-epitaph-wrap').forEach(wrap => {
+      const p = wrap.querySelector('p.stone-epitaph');
+      if (!p) return;
+
+      // Always restore full original text before measuring
+      const raw = p.dataset.epitaph || '';
+      p.textContent = '\u201c' + raw + '\u201d';
+      wrap.style.maxHeight = '';
+
+      const lineHeightPx = parseFloat(getComputedStyle(p).lineHeight);
+      const availH = wrap.getBoundingClientRect().height;
+      const wholeLines = Math.max(1, Math.floor(availH / lineHeightPx));
+      const maxH = wholeLines * lineHeightPx;
+      wrap.style.maxHeight = maxH + 'px';
+
+      // If full text still overflows, binary search for last fitting word
+      if (p.scrollHeight > maxH + 1) {
+        const words = raw.split(' ');
+        let lo = 0, hi = words.length;
+        while (lo < hi) {
+          const mid = Math.ceil((lo + hi) / 2);
+          p.textContent = '\u201c' + words.slice(0, mid).join(' ') + '\u2026\u201d';
+          if (p.scrollHeight <= maxH + 1) lo = mid;
+          else hi = mid - 1;
+        }
+        p.textContent = lo > 0
+          ? '\u201c' + words.slice(0, lo).join(' ') + '\u2026\u201d'
+          : '\u201c' + words[0].slice(0, 10) + '\u2026\u201d';
+      }
+    });
+  }
+
+  // ---- MODAL ----
+  function openModal(id) {
+    const g = graves.find(x=>x.id===id); if(!g) return;
+    const links = [];
+    if (g.website) links.push(`<a href="${esc(g.website)}" target="_blank" rel="noopener" style="color:var(--text);text-decoration:underline;font-size:0.88rem;word-break:break-all">${esc(g.website)}</a>`);
+    if (g.social)  links.push(`<a href="${esc(g.social)}"  target="_blank" rel="noopener" style="color:var(--text);text-decoration:underline;font-size:0.88rem;word-break:break-all">${esc(g.social)}</a>`);
+    document.getElementById('modalContent').innerHTML = `
+      <div class="modal-cross">✝</div>
+      <h2 class="modal-name">${esc(g.name)}</h2>
+      <p class="modal-meta">${esc(g.born)} — ${esc(g.died)} &nbsp;·&nbsp; ${esc(g.founder)}${g.burialDate?' &nbsp;·&nbsp; Buried on '+esc(g.burialDate):''}</p>
+      ${g.type?`<div style="text-align:center;margin-bottom:16px"><span class="modal-cause-tag">${esc(g.type)}</span></div>`:''}
+      <hr class="modal-divider">
+      <div class="modal-label">Epitaph</div>
+      <p class="modal-text">"${esc(g.epitaph)}"</p>
+      <div style="margin-top:18px">
+        <div class="modal-label">Cause of Death</div>
+        <span class="modal-cause-tag">☠ ${esc(g.cause)}</span>
+      </div>
+      ${links.length?`<div style="margin-top:18px"><div class="modal-label">Find the Founder</div><div style="display:flex;flex-direction:column;gap:6px;margin-top:8px">${links.join('')}</div></div>`:''}
+    `;
+    document.getElementById('modal').classList.add('active');
+  }
+
+  // ---- WAITLIST ----
+  async function submitWaitlist() {
+    const email = document.getElementById('waitlistEmail').value.trim();
+    const msg   = document.getElementById('waitlistMsg');
+    const btn   = document.querySelector('.waitlist-btn');
+
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      msg.className='waitlist-msg error';
+      msg.textContent='Please enter a valid email address.';
+      return;
+    }
+
+    // Check localStorage to prevent duplicate submissions from same browser
+    const submitted = JSON.parse(localStorage.getItem('waitlist_v1')||'[]');
+    if (submitted.includes(email)) {
+      msg.className='waitlist-msg error';
+      msg.textContent='This email is already on the list.';
+      return;
+    }
+
+    // Disable button while submitting
+    btn.disabled = true;
+    btn.textContent = 'Adding you...';
+    msg.className = 'waitlist-msg';
+    msg.textContent = '';
+
+    try {
+      const response = await fetch('/api/waitlist', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email })
+      });
+
+      if (response.status === 201 || response.status === 204) {
+        // Success — save to localStorage so they can't submit again from this browser
+        submitted.push(email);
+        localStorage.setItem('waitlist_v1', JSON.stringify(submitted));
+        document.getElementById('waitlistEmail').value = '';
+        msg.className = 'waitlist-msg success';
+        msg.textContent = "You're in. We'll let you know when the public graveyard opens its gates.";
+      } else if (response.status === 400) {
+        // Contact may already exist in Brevo
+        const data = await response.json();
+        if (data.code === 'duplicate_parameter') {
+          submitted.push(email);
+          localStorage.setItem('waitlist_v1', JSON.stringify(submitted));
+          msg.className = 'waitlist-msg success';
+          msg.textContent = "You're already on the list. We'll be in touch.";
+        } else {
+          msg.className = 'waitlist-msg error';
+          msg.textContent = 'Something went wrong. Please try again.';
+        }
+      } else {
+        msg.className = 'waitlist-msg error';
+        msg.textContent = 'Something went wrong. Please try again.';
+      }
+    } catch (err) {
+      msg.className = 'waitlist-msg error';
+      msg.textContent = 'Network error. Please check your connection and try again.';
+    }
+
+    btn.disabled = false;
+    btn.textContent = 'Notify Me';
+  }
+
+  function showToast(m) {
+    const t=document.getElementById('toast'); t.textContent=m; t.classList.add('show');
+    setTimeout(()=>t.classList.remove('show'),3000);
+  }
+  function esc(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  // ---- SEED DATA ----
+  if (!graves.length) {
+    graves = [
+      {id:1,name:"MealMate",prefix:"Here Lies",born:"2021",died:"2022",type:"App / Website",cause:"Burnout",epitaph:"A meal planning app that was going to change how busy people cook. Built for 8 months solo. Launched to 12 users, 11 of whom were family. The founder needed a nap.",founder:"History",website:"",social:"",burialDate:"3 March 2022",created:"2022-03-03T00:00:00Z"},
+      {id:2,name:"Laundry on Demand",prefix:"In Loving Memory Of",born:"2019",died:"2020",type:"Startup",cause:"No Money",epitaph:"Uber for laundry. Raised $5,000 from friends and family. Acquired 3 customers — one was a neighbour who kept forgetting to pay. Pivot discussions began and never ended.",founder:"History",website:"",social:"",burialDate:"14 February 2020",created:"2020-02-14T00:00:00Z"},
+      {id:3,name:"FocusBox",prefix:"Beloved",born:"2022",died:"2022",type:"SaaS",cause:"Too Much Competition",epitaph:"A distraction blocker with a clean UI and a Notion integration nobody asked for. Discovered there were 47 identical products on Product Hunt the day before launch. Quietly shelved.",founder:"History",website:"",social:"",burialDate:"9 September 2022",created:"2022-09-09T00:00:00Z"},
+      {id:4,name:"The 6AM Club Newsletter",prefix:"Here Lies",born:"2021",died:"2021",type:"Side Project",cause:"Lost Interest",epitaph:"A weekly newsletter about morning routines, discipline and cold showers. Grew to 340 subscribers. Issue 11 was never written because the founder slept in and never recovered mentally.",founder:"History",website:"",social:"",burialDate:"28 November 2021",created:"2021-11-28T00:00:00Z"},
+      {id:5,name:"PawDash",prefix:"In Loving Memory Of",born:"2020",died:"2021",type:"Startup",cause:"No Users",epitaph:"A hyperlocal pet food delivery service. The market research said pet owners would pay a premium. The market research was wrong. 90 days. Zero repeat orders. One very fed dog.",founder:"History",website:"",social:"",burialDate:"1 June 2021",created:"2021-06-01T00:00:00Z"},
+      {id:6,name:"CodeMentor Pro",prefix:"Beloved",born:"2023",died:"2023",type:"SaaS",cause:"Over-Engineered",epitaph:"An AI-powered code review tool with 14 integrations, 3 pricing tiers and a custom DSL the founder invented. Spent 11 months building. Spent 0 months talking to customers. Classic.",founder:"History",website:"",social:"",burialDate:"31 December 2023",created:"2023-12-31T00:00:00Z"},
+      {id:7,name:"TripSplit",prefix:"Here Lies",born:"2022",died:"2023",type:"App / Website",cause:"Co-founder Drama",epitaph:"An app to split travel expenses between friends. Two co-founders, one vision, zero agreement on anything else. By month four they were splitting the equity. By month six, just splitting.",founder:"History",website:"",social:"",burialDate:"17 July 2023",created:"2023-07-17T00:00:00Z"},
+      {id:8,name:"Tabla Tutorials",prefix:"In Loving Memory Of",born:"2020",died:"2020",type:"Side Project",cause:"Life Got in the Way",epitaph:"An online tabla learning platform built during lockdown with genuine passion and a decent microphone. A new job offer arrived in October. The domain expired quietly in December.",founder:"History",website:"",social:"",burialDate:"31 December 2020",created:"2020-12-31T00:00:00Z"},
+      {id:9,name:"Smart ATM",prefix:"Here Lies",born:"2016",died:"2016",type:"Side Project",cause:"Skill Gap",epitaph:"An ATM that would use your face instead of your PIN. The idea was ahead of its time. The founder's computer vision skills were not. It never got past a blurry webcam and a lot of Stack Overflow tabs.",founder:"Veena Shah",website:"",social:"",burialDate:"1 December 2016",created:"2016-12-01T00:00:00Z"},
+      {id:10,name:"Artzwall",prefix:"Beloved",born:"2018",died:"2019",type:"App / Website",cause:"Lost Interest",epitaph:"A wallpaper app where every image was a painting — traditional or digital, made by real verified artists. Beautiful in concept. The curation took months. The downloads never came. The passion quietly packed its brushes and left.",founder:"Robert Walters",website:"",social:"",burialDate:"14 August 2019",created:"2019-08-14T00:00:00Z"}
+    ];
+    save();
+  }
+
+  applyFilters();
+  updateToll();
+  document.getElementById('footerYear').textContent = new Date().getFullYear();
+
+  // Re-clamp epitaphs whenever the window resizes (column widths change)
+  window.addEventListener('resize', () => {
+    clearTimeout(window._clampTimer);
+    window._clampTimer = setTimeout(() => {
+      document.fonts.ready.then(() => {
+        requestAnimationFrame(() => {
+          requestAnimationFrame(clampEpitaphsToWholeLines);
+        });
+      });
+    }, 150);
+  });
+</script>
+</body>
+</html>
