@@ -322,6 +322,7 @@
     .stone-arch-cross {
       font-size: 1.8rem; color: var(--stone-engraving-soft);
       line-height: 1; position: relative; z-index: 1;
+      font-family: 'Georgia', serif; font-style: normal;
     }
     .stone-type-badge {
       background: var(--stone-engraving); color: var(--stone-base);
@@ -656,13 +657,11 @@
       display: flex; align-items: center; justify-content: space-between;
       font-family: 'Nunito Sans', sans-serif; font-size: 0.74rem; font-weight: 700;
       color: var(--text-secondary); letter-spacing: 0.18em; text-transform: uppercase;
-      position: relative; z-index: 0;
     }
     .footer-left button {
       background: none; border: none; font-family: 'Nunito Sans', sans-serif;
       font-size: 0.74rem; font-weight: 700; color: var(--text-secondary);
       letter-spacing: 0.18em; text-transform: uppercase; cursor: pointer; padding: 0; transition: color 0.2s;
-      position: relative; z-index: 9999;
     }
     .footer-left button:hover { color: var(--text); }
     .footer-center { text-align: center; display: flex; flex-direction: column; gap: 6px; }
@@ -726,7 +725,7 @@
   </div>
   <div class="nav-brand">RIP My Idea</div>
   <div class="nav-right">
-    <button class="theme-toggle" id="themeBtn" onclick="toggleTheme()" title="Toggle theme">☽&#xFE0E;</button>
+    <button class="theme-toggle" id="themeBtn" onclick="toggleTheme()" title="Toggle theme">&#9789;</button>
   </div>
 </nav>
 
@@ -761,7 +760,7 @@
   <div class="graveyard-search-row">
     <div class="search-filter-wrap">
       <div class="search-input-wrap">
-        <span class="search-icon">&#9906;&#xFE0E;</span>
+        <span class="search-icon">&#9906;</span>
         <input type="text" id="graveSearch" placeholder="Search..." oninput="applyFilters()" />
       </div>
       <div class="filter-btn" id="filterBtnWrap">
@@ -780,7 +779,7 @@
 <!-- FORM OVERLAY -->
 <div class="form-overlay" id="formOverlay" onclick="closeFormBackdrop(event)">
   <div class="form-panel">
-    <button class="panel-close" onclick="closeForm()">✕&#xFE0E;</button>
+    <button class="panel-close" onclick="closeForm()">&#215;</button>
     <div class="form-header">
       <h2 class="form-heading">Bury My Idea</h2>
       <p class="form-tagline">Every unfinished idea deserves a proper burial.</p>
@@ -885,7 +884,7 @@
 <!-- DETAIL MODAL -->
 <div class="modal-overlay" id="modal" onclick="closeModalBackdrop(event)">
   <div class="modal-box">
-    <button class="panel-close" onclick="closeModal()">✕&#xFE0E;</button>
+    <button class="panel-close" onclick="closeModal()">&#215;</button>
     <div id="modalContent"></div>
   </div>
 </div>
@@ -893,7 +892,7 @@
 <!-- ABOUT MODAL -->
 <div class="about-overlay" id="aboutOverlay" onclick="closeAboutBackdrop(event)">
   <div class="about-box">
-    <button class="panel-close" onclick="closeAbout()">✕&#xFE0E;</button>
+    <button class="panel-close" onclick="closeAbout()">&#215;</button>
     <h2 class="about-title">About RIP My Idea</h2>
     <p class="about-body">RIP My Idea is a digital graveyard for the startups, side projects, apps, products, and dreams that never made it — not because they were bad ideas, but because building things is hard. Money runs out. Passion fades. Co-founders fight. Life gets in the way. None of that makes your idea less worthy of a proper farewell.</p>
     <p class="about-body">This is a place for closure. You tried something. You deserve to mark it. Write the epitaph, lay it to rest, and move forward knowing it happened and it mattered.</p>
@@ -936,7 +935,7 @@
 <!-- PRIVACY MODAL -->
 <div class="privacy-overlay" id="privacyOverlay" onclick="closePrivacyBackdrop(event)">
   <div class="privacy-box">
-    <button class="panel-close" onclick="closePrivacy()">✕&#xFE0E;</button>
+    <button class="panel-close" onclick="closePrivacy()">&#215;</button>
     <h2 class="privacy-title">Privacy Policy</h2>
     <p class="privacy-body">This Privacy Policy describes how RIP My Idea collects, uses, and handles information provided by users of this platform. By accessing or using this site, you acknowledge and agree to the terms described below.</p>
     <h4 class="privacy-section">Data Storage</h4>
@@ -956,7 +955,7 @@
 
 <!-- BURIAL LOADING -->
 <div class="burial-loading" id="burialLoading">
-  <div class="burial-coffin">⚰&#xFE0E;</div>
+  <div class="burial-coffin">&#8224;</div>
   <div class="burial-msg" id="burialMsg">Digging the grave…</div>
   <div class="burial-dots"><span></span><span></span><span></span></div>
 </div>
@@ -969,7 +968,7 @@
     <div class="reveal-stone-wrap">
       <div class="stone-whole" style="animation: stoneAppear 0.6s 0.2s cubic-bezier(0.22,1,0.36,1) both;">
         <div class="stone-arch">
-          <span class="stone-arch-cross">✝&#xFE0E;</span>
+          <span class="stone-arch-cross">&#10013;</span>
           <span id="revealArchBadge"></span>
         </div>
         <div class="stone-body" id="revealStoneBody"></div>
@@ -984,7 +983,7 @@
 <div class="toast" id="toast"></div>
 
 <footer>
-  <div class="footer-left"><button type="button" onclick="openPrivacy()">Privacy Policy</button></div>
+  <div class="footer-left"><button onclick="openPrivacy()">Privacy Policy</button></div>
   <div class="footer-center"></div>
   <div class="footer-right">
     <div class="footer-legal">&copy; <span id="footerYear"></span> RIP My Idea &nbsp;·&nbsp; All Rights Reserved</div>
@@ -1077,7 +1076,7 @@
     const html = document.documentElement;
     const isLight = html.getAttribute('data-theme') === 'light';
     html.setAttribute('data-theme', isLight ? 'dark' : 'light');
-    document.getElementById('themeBtn').textContent = isLight ? '☽\uFE0E' : '☀\uFE0E';
+    document.getElementById('themeBtn').innerHTML = isLight ? '&#9789;' : '&#9788;';
   }
 
   function selectType(btn, value) {
@@ -1265,7 +1264,7 @@
         <div class="grave-card-stone">
           <div class="stone-whole">
             <div class="stone-arch">
-              <span class="stone-arch-cross">✝&#xFE0E;</span>
+              <span class="stone-arch-cross">&#10013;</span>
               ${g.type?`<span class="stone-type-badge">${esc(g.type)}</span>`:''}
             </div>
             <div class="stone-body">
@@ -1334,7 +1333,7 @@
     if (g.website) links.push(`<a href="${esc(g.website)}" target="_blank" rel="noopener" style="color:var(--text);text-decoration:underline;font-size:0.88rem;word-break:break-all">${esc(g.website)}</a>`);
     if (g.social)  links.push(`<a href="${esc(g.social)}"  target="_blank" rel="noopener" style="color:var(--text);text-decoration:underline;font-size:0.88rem;word-break:break-all">${esc(g.social)}</a>`);
     document.getElementById('modalContent').innerHTML = `
-      <div class="modal-cross">✝&#xFE0E;</div>
+      <div class="modal-cross">&#10013;</div>
       <h2 class="modal-name">${esc(g.name)}</h2>
       <p class="modal-meta">${esc(g.born)} — ${esc(g.died)} &nbsp;·&nbsp; ${esc(g.founder)}${g.burialDate?' &nbsp;·&nbsp; Buried on '+esc(g.burialDate):''}</p>
       ${g.type?`<div style="text-align:center;margin-bottom:16px"><span class="modal-cause-tag">${esc(g.type)}</span></div>`:''}
@@ -1343,7 +1342,7 @@
       <p class="modal-text">"${esc(g.epitaph)}"</p>
       <div style="margin-top:18px">
         <div class="modal-label">Cause of Death</div>
-        <span class="modal-cause-tag">☠ ${esc(g.cause)}</span>
+        <span class="modal-cause-tag">&#10013; ${esc(g.cause)}</span>
       </div>
       ${links.length?`<div style="margin-top:18px"><div class="modal-label">Find the Founder</div><div style="display:flex;flex-direction:column;gap:6px;margin-top:8px">${links.join('')}</div></div>`:''}
     `;
