@@ -320,10 +320,12 @@
     }
     [data-theme="light"] .stone-arch::before { border-color: rgba(0,0,0,0.07); }
     .stone-arch-cross {
-      font-size: 1.8rem; color: var(--stone-engraving-soft);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--stone-engraving-soft);
       line-height: 1; position: relative; z-index: 1;
       font-family: 'Georgia', serif; font-style: normal;
     }
+    .stone-arch-cross svg { display: block; }
     .stone-type-badge {
       background: var(--stone-engraving); color: var(--stone-base);
       font-family: 'Nunito Sans', sans-serif; font-size: 0.65rem; font-weight: 800;
@@ -579,7 +581,7 @@
       z-index: 90000; flex-direction: column; align-items: center; justify-content: center; gap: 28px;
     }
     .burial-loading.active { display: flex; }
-    .burial-coffin { font-size: 3.2rem; animation: coffinSink 0.9s ease-in-out infinite alternate; }
+    .burial-coffin { font-size: 3.2rem; color: var(--text); animation: coffinSink 0.9s ease-in-out infinite alternate; }
     @keyframes coffinSink {
       from { transform: translateY(-10px); }
       to   { transform: translateY(10px); }
@@ -725,7 +727,7 @@
   </div>
   <div class="nav-brand">RIP My Idea</div>
   <div class="nav-right">
-    <button class="theme-toggle" id="themeBtn" onclick="toggleTheme()" title="Toggle theme">&#9789;</button>
+    <button class="theme-toggle" id="themeBtn" onclick="toggleTheme()" title="Toggle theme"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/></svg></button>
   </div>
 </nav>
 
@@ -955,7 +957,7 @@
 
 <!-- BURIAL LOADING -->
 <div class="burial-loading" id="burialLoading">
-  <div class="burial-coffin">&#8224;</div>
+  <div class="burial-coffin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="48" height="48" fill="currentColor"><path d="M8 2h8l3 5v14a1 1 0 01-1 1H6a1 1 0 01-1-1V7l3-5z"/></svg></div>
   <div class="burial-msg" id="burialMsg">Digging the grave…</div>
   <div class="burial-dots"><span></span><span></span><span></span></div>
 </div>
@@ -968,7 +970,7 @@
     <div class="reveal-stone-wrap">
       <div class="stone-whole" style="animation: stoneAppear 0.6s 0.2s cubic-bezier(0.22,1,0.36,1) both;">
         <div class="stone-arch">
-          <span class="stone-arch-cross">&#10013;</span>
+          <span class="stone-arch-cross"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><rect x="10" y="2" width="4" height="20"/><rect x="2" y="7" width="20" height="4"/></svg></span>
           <span id="revealArchBadge"></span>
         </div>
         <div class="stone-body" id="revealStoneBody"></div>
@@ -1076,7 +1078,7 @@
     const html = document.documentElement;
     const isLight = html.getAttribute('data-theme') === 'light';
     html.setAttribute('data-theme', isLight ? 'dark' : 'light');
-    document.getElementById('themeBtn').innerHTML = isLight ? '&#9789;' : '&#9788;';
+    document.getElementById('themeBtn').innerHTML = isLight ? '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/></svg>' : '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3" stroke="currentColor" stroke-width="2"/><line x1="12" y1="21" x2="12" y2="23" stroke="currentColor" stroke-width="2"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64" stroke="currentColor" stroke-width="2"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78" stroke="currentColor" stroke-width="2"/><line x1="1" y1="12" x2="3" y2="12" stroke="currentColor" stroke-width="2"/><line x1="21" y1="12" x2="23" y2="12" stroke="currentColor" stroke-width="2"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36" stroke="currentColor" stroke-width="2"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22" stroke="currentColor" stroke-width="2"/></svg>';
   }
 
   function selectType(btn, value) {
@@ -1264,7 +1266,7 @@
         <div class="grave-card-stone">
           <div class="stone-whole">
             <div class="stone-arch">
-              <span class="stone-arch-cross">&#10013;</span>
+              <span class="stone-arch-cross"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><rect x="10" y="2" width="4" height="20"/><rect x="2" y="7" width="20" height="4"/></svg></span>
               ${g.type?`<span class="stone-type-badge">${esc(g.type)}</span>`:''}
             </div>
             <div class="stone-body">
@@ -1333,7 +1335,7 @@
     if (g.website) links.push(`<a href="${esc(g.website)}" target="_blank" rel="noopener" style="color:var(--text);text-decoration:underline;font-size:0.88rem;word-break:break-all">${esc(g.website)}</a>`);
     if (g.social)  links.push(`<a href="${esc(g.social)}"  target="_blank" rel="noopener" style="color:var(--text);text-decoration:underline;font-size:0.88rem;word-break:break-all">${esc(g.social)}</a>`);
     document.getElementById('modalContent').innerHTML = `
-      <div class="modal-cross">&#10013;</div>
+      <div class="modal-cross"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><rect x="10" y="2" width="4" height="20"/><rect x="2" y="7" width="20" height="4"/></svg></div>
       <h2 class="modal-name">${esc(g.name)}</h2>
       <p class="modal-meta">${esc(g.born)} — ${esc(g.died)} &nbsp;·&nbsp; ${esc(g.founder)}${g.burialDate?' &nbsp;·&nbsp; Buried on '+esc(g.burialDate):''}</p>
       ${g.type?`<div style="text-align:center;margin-bottom:16px"><span class="modal-cause-tag">${esc(g.type)}</span></div>`:''}
@@ -1342,7 +1344,7 @@
       <p class="modal-text">"${esc(g.epitaph)}"</p>
       <div style="margin-top:18px">
         <div class="modal-label">Cause of Death</div>
-        <span class="modal-cause-tag">&#10013; ${esc(g.cause)}</span>
+        <span class="modal-cause-tag"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="12" height="12" fill="currentColor" style="vertical-align:middle;margin-right:4px"><rect x="10" y="2" width="4" height="20"/><rect x="2" y="7" width="20" height="4"/></svg>${esc(g.cause)}</span>
       </div>
       ${links.length?`<div style="margin-top:18px"><div class="modal-label">Find the Founder</div><div style="display:flex;flex-direction:column;gap:6px;margin-top:8px">${links.join('')}</div></div>`:''}
     `;
